@@ -4,15 +4,19 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      videos: window.exampleVideoData
+      videos: window.exampleVideoData,
+      currentVideo: window.exampleVideoData[0]
     };
+    this.changeVideo = this.changeVideo.bind(this);
   }
 
-  onListItemClick() {
+  changeVideo(things, input) {
     this.setState({
-     
+      currentVideo: input.video
     });
+    console.log(input);
   }
+  
   render() {
     return (
       <div>
@@ -23,10 +27,10 @@ class App extends React.Component {
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <VideoPlayer video={this.state.videos[0]}/>
+            <VideoPlayer video={this.state.currentVideo}/>
           </div>
           <div className="col-md-5">
-            <VideoList videos={this.state.videos} />
+            <VideoList videos={this.state.videos} item={this.changeVideo}/>
           </div>
         </div>
       </div>
