@@ -10,11 +10,10 @@ class App extends React.Component {
     this.changeVideo = this.changeVideo.bind(this);
   }
 
-  changeVideo(things, input) {
+  changeVideo(input) {
     this.setState({
       currentVideo: input.video
     });
-    console.log(input);
   }
   
   render() {
