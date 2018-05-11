@@ -8,12 +8,41 @@ class App extends React.Component {
       currentVideo: window.exampleVideoData[0]
     };
     this.changeVideo = this.changeVideo.bind(this);
+    this.searchDebounce = _.debounce(this.search.bind(this), 500)
   }
-
+  componentDidMount() {
+    this.search('')
+  }
   changeVideo(input) {
     this.setState({
-      currentVideo: input.video
+      currentVideo: input
     });
+  }
+
+  search(text) {
+    var test = this;
+    $.ajax({
+      url: 'https://www.googleapis.com/youtube/v3/search',
+      type: 'GET',
+      data: {
+        'part': 'snippet',
+        'q': text,
+        'type': 'video',
+        'videoEmbeddable': 'true',
+        'autoplay': 1,
+        'key': window.YOUTUBE_API_KEY
+      },
+      success: function(data) {
+        console.log(data);
+        if(data.items.length >= 5) {
+          test.setState({
+            videos: data.items,
+            currentVideo: data.items[0]
+          })
+        }
+      }
+    })
+
   }
   
   render() {
@@ -21,15 +50,15 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div><h5><em>search</em> view goes here</h5></div>
+            <Search searchDebounce={this.searchDebounce} />
           </div>
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <VideoPlayer video={this.state.currentVideo}/>
+            <VideoPlayer video={this.state.currentVideo} />
           </div>
           <div className="col-md-5">
-            <VideoList videos={this.state.videos} item={this.changeVideo}/>
+            <VideoList videos={this.state.videos} item={this.changeVideo} />
           </div>
         </div>
       </div>

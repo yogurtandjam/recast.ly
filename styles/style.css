@@ -60,6 +60,7 @@ body {
 .video-list-entry {
   font-size: 16px;
   padding: 8px;
+  box-shadow: 0 1px 2px;
 }
 
 .video-list-entry-title {
@@ -74,6 +75,14 @@ body {
 .video-list-entry-detail {
   font-size: 12px;
   color: #999;
+}
+
+.video-list-entry-channeltitle {
+  font-weight: bold;
+}
+
+.video-list-entry-publishedat {
+  font-size: 10px;
 }
 
 .loading {
